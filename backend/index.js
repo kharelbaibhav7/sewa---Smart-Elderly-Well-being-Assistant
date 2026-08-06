@@ -15,12 +15,12 @@ app.listen(port, () => {
 app.use(json());
 
 // app.use("/api", router)
-// import authRouter from "./src/router/authRouter.js";
-// import guardianRouter from "./src/router/guardianRouter.js";
-// import patientRouter from "./src/router/patientRouter.js";
+import authRouter from "./src/router/authRouter.js";
+import guardianRouter from "./src/router/guardianRouter.js";
+import patientRouter from "./src/router/patientRouter.js";
 
-// app.use("/api/auth", authRouter);
-// app.use("/api/guardian", guardianRouter);
-// app.use("/api/patient", patientRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/guardian", guardianRouter);
+app.use("/api/patient", patientRouter);
 
 app.use(errorMiddleware);
