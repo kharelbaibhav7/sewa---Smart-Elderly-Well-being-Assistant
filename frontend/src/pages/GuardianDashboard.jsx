@@ -19,6 +19,8 @@ import MedicineRecordList from "../components/MedicineRecordList";
 import DateNavigation from "../components/DateNavigation";
 import HeartRateStats from "../components/HeartRateStats";
 import SleepStats from "../components/SleepStats";
+import FallMonitor from "../components/FallMonitor";
+import AlertPanel from "../components/AlertPanel";
 
 const GuardianDashboard = () => {
     const navigate = useNavigate();
@@ -27,6 +29,8 @@ const GuardianDashboard = () => {
     const [loading, setLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [currentStatus, setCurrentStatus] = useState({ status: "idle" });
+    const [recentFall, setRecentFall] = useState(null);
 
     const fetchPatientData = useCallback(async () => {
         setLoading(true);
@@ -118,6 +122,14 @@ const GuardianDashboard = () => {
                         <Calendar className="w-5 h-5" />
                         <span className="font-medium">Medicine Schedule</span>
                     </button>
+                    <button
+                        onClick={() => { setActiveTab("fall"); setIsSidebarOpen(false); }}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${activeTab === "fall" ? "bg-red-600 text-white shadow-lg shadow-red-900/40" : "text-gray-400 hover:bg-gray-700 hover:text-white"
+                            }`}
+                    >
+                        <Bell className="w-5 h-5" />
+                        <span className="font-medium">Fall Detection</span>
+                    </button>
                 </nav>
 
                 <div className="p-4 border-t border-gray-700">
@@ -146,6 +158,7 @@ const GuardianDashboard = () => {
                                 {activeTab === "overview" && "Dashboard Overview"}
                                 {activeTab === "patients" && "Patient Details"}
                                 {activeTab === "schedule" && "Medicine Scheduler"}
+                                {activeTab === "fall" && "Fall Detection"}
                             </h2>
                             <p className="hidden md:block text-gray-400 text-sm mt-1">Manage your patient's well-being</p>
                         </div>
@@ -163,7 +176,7 @@ const GuardianDashboard = () => {
                             <Bell className="w-6 h-6" />
                             <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-gray-800"></span>
                         </button>
-                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-bold shadow-lg text-sm md:text-base">
+                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-linear-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white font-bold shadow-lg text-sm md:text-base">
                             G
                         </div>
                     </div>
@@ -267,6 +280,32 @@ const GuardianDashboard = () => {
                                     <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
                                         <h3 className="text-xl font-bold text-white mb-4">Complete Schedule</h3>
                                         <MedicineScheduleList schedule={patient?.medicineSchedule} />
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === "fall" && (
+                                <div className="grid gap-6 xl:grid-cols-[1.3fr_0.7fr] items-start">
+                                    <div>
+                                        <div className="mb-6 rounded-3xl bg-gray-800 border border-gray-700 p-6 shadow-xl shadow-black/20">
+                                            <h1 className="text-3xl font-bold text-white">Fall Detection</h1>
+                                            <p className="mt-3 text-gray-400">
+                                                Live monitoring for your linked patient. Falls are detected in-browser and recorded for guardian review.
+                                            </p>
+                                        </div>
+                                        <FallMonitor onStatusChange={setCurrentStatus} onFallEvent={setRecentFall} />
+                                    </div>
+
+                                    <div className="space-y-6">
+                                        <AlertPanel currentStatus={currentStatus} recentFall={recentFall} />
+                                        <div className="rounded-3xl bg-gray-800 border border-gray-700 p-6 shadow-xl shadow-black/20">
+                                            <h2 className="text-2xl font-semibold text-white">How it works</h2>
+                                            <ul className="mt-4 space-y-3 text-gray-400 list-disc list-inside">
+                                                <li>Live pose detection runs in the browser using your camera.</li>
+                                                <li>Falls are classified as ground falls or bed falls.</li>
+                                                <li>When a fall is detected, an audible buzzer plays and the backend records the event.</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             )}

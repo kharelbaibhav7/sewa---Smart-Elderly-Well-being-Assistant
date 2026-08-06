@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import GuardianDashboard from "./pages/GuardianDashboard";
 import PatientDashboard from "./pages/PatientDashboard";
-import FallDetection from "./pages/FallDetection";
+import HospitalDashboard from "./pages/HospitalDashboard";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         {/* Protected Routes (Ideally wrapped in AuthGuard) */}
         <Route path="/guardian/dashboard" element={<GuardianDashboard />} />
         <Route path="/patient/dashboard" element={<PatientDashboard />} />
-        <Route path="/patient/fall-detection" element={<FallDetection />} />
+        <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
       </Routes>
     </>
   );

@@ -55,7 +55,7 @@ export default function FallMonitor({ onStatusChange, onFallEvent }) {
 
             const token = localStorage.getItem("token");
             try {
-                await fetch(`${API_BASE}/api/patient/fall-alert`, {
+                await fetch(`${API_BASE}/api/guardian/fall-alert`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

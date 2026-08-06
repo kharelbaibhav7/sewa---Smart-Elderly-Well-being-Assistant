@@ -44,3 +44,13 @@ export const isPatient = (req, res, next) => {
     next(error);
   }
 };
+
+export const isHospital = (req, res, next) => {
+  if (req.user && req.user.role === "hospital") {
+    next();
+  } else {
+    const error = new Error("Access denied. Hospitals only.");
+    error.statusCode = 403;
+    next(error);
+  }
+};

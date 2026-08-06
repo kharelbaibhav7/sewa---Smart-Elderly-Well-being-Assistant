@@ -28,8 +28,10 @@ const Login = () => {
                 toast.success("Logged in successfully");
                 if (data.data.role === "guardian") {
                     navigate("/guardian/dashboard");
-                } else {
+                } else if (data.data.role === "patient") {
                     navigate("/patient/dashboard");
+                } else {
+                    navigate("/hospital/dashboard");
                 }
             } else {
                 toast.error(data.message || "Login failed");
@@ -65,6 +67,15 @@ const Login = () => {
                             }`}
                     >
                         Patient
+                    </button>
+                    <button
+                        onClick={() => setRole("hospital")}
+                        className={`px-4 py-2 rounded-lg transition-all ${role === "hospital"
+                            ? "bg-violet-600 text-white shadow-lg shadow-violet-500/20"
+                            : "bg-gray-700 text-gray-400 hover:bg-gray-600"
+                            }`}
+                    >
+                        Hospital
                     </button>
                 </div>
                 <form onSubmit={handleLogin} className="space-y-4">

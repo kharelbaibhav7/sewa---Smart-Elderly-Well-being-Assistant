@@ -1,5 +1,6 @@
 import Guardian from "../schema/guardian.js";
 import Patient from "../schema/patient.js";
+import Hospital from "../schema/hospital.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { secretKey } from "../constant/constant.js";
@@ -90,11 +91,53 @@ export const registerPatient = async (req, res, next) => {
   }
 };
 
+export const registerHospital = async (req, res, next) => {
+  try {
+    const { name, email, password, phone, address } = req.body;
+
+    let hospital = await Hospital.findOne({ email });
+    if (hospital) {
+      const error = new Error("Hospital already exists.");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    hospital = await Hospital.create({
+      name,
+      email,
+      password: hashedPassword,
+      phone,
+      address: address || "",
+    });
+
+    const token = generateToken({
+      id: hospital._id,
+      role: "hospital",
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Hospital registered successfully.",
+      token,
+      data: {
+        id: hospital._id,
+        name: hospital.name,
+        email: hospital.email,
+        role: "hospital",
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const login = async (req, res, next) => {
   try {
     const { email, password, role } = req.body; // Role is required to know which collection to query
 
-    if (!role || (role !== "guardian" && role !== "patient")) {
+    if (!role || (role !== "guardian" && role !== "patient" && role !== "hospital")) {
       const error = new Error("Invalid or missing role.");
       error.statusCode = 400;
       throw error;
@@ -103,8 +146,10 @@ export const login = async (req, res, next) => {
     let user;
     if (role === "guardian") {
       user = await Guardian.findOne({ email });
-    } else {
+    } else if (role === "patient") {
       user = await Patient.findOne({ email });
+    } else {
+      user = await Hospital.findOne({ email });
     }
 
     if (!user) {

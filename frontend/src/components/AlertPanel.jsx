@@ -22,7 +22,7 @@ export default function AlertPanel({ currentStatus, recentFall }) {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch(`${API_BASE}/api/patient/fall-alert`, {
+            const res = await fetch(`${API_BASE}/api/guardian/fall-alert`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

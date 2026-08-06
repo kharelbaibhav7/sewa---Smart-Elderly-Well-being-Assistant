@@ -11,10 +11,12 @@ app.use(json());
 import authRouter from "./src/router/authRouter.js";
 import guardianRouter from "./src/router/guardianRouter.js";
 import patientRouter from "./src/router/patientRouter.js";
+import hospitalRouter from "./src/router/hospitalRouter.js";
 
 app.use("/api/auth", authRouter);
 app.use("/api/guardian", guardianRouter);
 app.use("/api/patient", patientRouter);
+app.use("/api/hospital", hospitalRouter);
 
 app.use(errorMiddleware);
 

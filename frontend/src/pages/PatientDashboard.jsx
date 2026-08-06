@@ -327,14 +327,6 @@ const PatientDashboard = () => {
                         <span className="text-lg md:text-2xl font-bold text-white">{t.profile}</span>
                     </button>
 
-                    {/* Fall Detection */}
-                    <button
-                        onClick={() => navigate("/patient/fall-detection")}
-                        className="bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-2xl p-4 md:p-6 flex flex-col items-center justify-center space-y-2 md:space-y-3 shadow-lg transition-transform active:scale-95 h-32 md:h-40"
-                    >
-                        <AlertTriangle className="w-10 h-10 md:w-12 md:h-12 text-white" />
-                        <span className="text-lg md:text-2xl font-bold text-white">Fall Detection</span>
-                    </button>
                 </div>
             </main>
         </div>

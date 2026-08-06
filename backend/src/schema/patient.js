@@ -68,6 +68,10 @@ const patientSchema = new mongoose.Schema({
     lat: { type: Number, default: 27.7172 }, // Dummy: Kathmandu
     lng: { type: Number, default: 85.324 },
   },
+  hospital: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Hospital",
+  },
   preferredHospital: {
     name: String,
     address: String,
