@@ -237,7 +237,7 @@ const PatientDashboard = () => {
                     <ChevronLeft className="w-6 h-6 mr-1" /> {t.back}
                 </button>
                 <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
-                    <div className="h-24 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+                    <div className="h-24 bg-linear-to-r from-emerald-500 to-teal-500"></div>
                     <div className="p-6">
                         <div className="relative -mt-16 mb-4">
                             <div className="w-24 h-24 rounded-full border-4 border-gray-800 bg-gray-700 flex items-center justify-center text-3xl font-bold">
@@ -271,7 +271,7 @@ const PatientDashboard = () => {
             />
             {/* Header */}
             <header className="w-full p-4 md:p-6 bg-gray-800 border-b border-gray-700 flex justify-between items-center sticky top-0 z-10">
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+                <h1 className="text-3xl font-bold bg-linear-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
                     SEWA
                 </h1>
 
@@ -308,7 +308,7 @@ const PatientDashboard = () => {
                     <span className="text-red-200 text-base md:text-xl font-medium">{t.emergencyAlert}</span>
                 </button>
 
-                <div className="grid grid-cols-2 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                     {/* Medicine Reminders */}
                     <button
                         onClick={() => setView("medicine")}
@@ -325,6 +325,15 @@ const PatientDashboard = () => {
                     >
                         <User className="w-10 h-10 md:w-12 md:h-12 text-white" />
                         <span className="text-lg md:text-2xl font-bold text-white">{t.profile}</span>
+                    </button>
+
+                    {/* Fall Detection */}
+                    <button
+                        onClick={() => navigate("/patient/fall-detection")}
+                        className="bg-red-600 hover:bg-red-700 active:bg-red-800 rounded-2xl p-4 md:p-6 flex flex-col items-center justify-center space-y-2 md:space-y-3 shadow-lg transition-transform active:scale-95 h-32 md:h-40"
+                    >
+                        <AlertTriangle className="w-10 h-10 md:w-12 md:h-12 text-white" />
+                        <span className="text-lg md:text-2xl font-bold text-white">Fall Detection</span>
                     </button>
                 </div>
             </main>

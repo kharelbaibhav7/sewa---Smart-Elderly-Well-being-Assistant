@@ -6,6 +6,11 @@ import {
   updateProfile,
   logMedicineRecord,
 } from "../controller/patientController.js";
+import {
+  createFallAlert,
+  getFallAlerts,
+  acknowledgeFallAlert,
+} from "../controller/fallAlertController.js";
 import { verifyToken, isPatient } from "../middleware/authMiddleware.js";
 
 const patientRouter = Router();
@@ -16,5 +21,7 @@ patientRouter.route("/profile").get(getPatientProfile).patch(updateProfile);
 patientRouter.route("/emergency").post(triggerEmergency);
 patientRouter.route("/medicine-schedule").get(getMedicineSchedule);
 patientRouter.route("/medicine-record").post(logMedicineRecord);
+patientRouter.route("/fall-alert").post(createFallAlert).get(getFallAlerts);
+patientRouter.route("/fall-alert/:id/acknowledge").patch(acknowledgeFallAlert);
 
 export default patientRouter;

@@ -79,7 +79,7 @@ const MedicineScheduler = ({ onScheduleAdded }) => {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3 bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white rounded-lg font-bold transition-all transform hover:scale-[1.02]"
+                    className="w-full py-3 bg-linear-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white rounded-lg font-bold transition-all transform hover:scale-[1.02]"
                 >
                     {loading ? "Scheduling..." : "Add Schedule"}
                 </button>
@@ -89,3 +89,4 @@ const MedicineScheduler = ({ onScheduleAdded }) => {
 };
 
 export default MedicineScheduler;
+   

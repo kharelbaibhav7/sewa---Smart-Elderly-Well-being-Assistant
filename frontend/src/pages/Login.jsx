@@ -44,7 +44,7 @@ const Login = () => {
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white p-4">
             <div className="w-full max-w-md p-6 md:p-8 bg-gray-800 rounded-lg shadow-lg border border-gray-700">
-                <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                <h2 className="text-3xl font-bold text-center mb-6 bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
                     Welcome Back
                 </h2>
                 <div className="flex justify-center mb-6 space-x-4">
@@ -93,7 +93,7 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3 mt-4 rounded-lg bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] flex justify-center items-center"
+                        className="w-full py-3 mt-4 rounded-lg bg-linear-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-bold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] flex justify-center items-center"
                     >
                         {loading ? <Loader2 className="animate-spin h-5 w-5" /> : "Login"}
                     </button>

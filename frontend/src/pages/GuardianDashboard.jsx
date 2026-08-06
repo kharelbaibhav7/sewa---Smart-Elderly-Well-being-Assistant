@@ -83,7 +83,7 @@ const GuardianDashboard = () => {
             >
                 <div className="p-6 flex justify-between items-center">
                     <div>
-                        <h1 className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                        <h1 className="text-3xl font-extrabold bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
                             SEWA
                         </h1>
                         <p className="text-xs font-medium text-gray-500 tracking-wider uppercase mt-1">Guardian Portal</p>
@@ -223,7 +223,7 @@ const GuardianDashboard = () => {
 
                             {activeTab === "patients" && (
                                 <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
-                                    <div className="h-24 md:h-32 bg-gradient-to-r from-blue-600 to-emerald-600"></div>
+                                    <div className="h-24 md:h-32 bg-linear-to-r from-blue-600 to-emerald-600"></div>
                                     <div className="px-6 md:px-8 pb-8">
                                         <div className="relative -mt-12 md:-mt-16 mb-4">
                                             <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-gray-800 bg-gray-700 flex items-center justify-center text-3xl md:text-4xl font-bold">
