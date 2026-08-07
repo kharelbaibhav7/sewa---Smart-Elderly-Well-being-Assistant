@@ -77,6 +77,20 @@ const patientSchema = new mongoose.Schema({
     address: String,
     contact: String,
   },
+  hospitalNotes: [
+    {
+      text: String,
+      hospital: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Hospital",
+      },
+      hospitalName: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
 
 const Patient = mongoose.model("Patient", patientSchema);

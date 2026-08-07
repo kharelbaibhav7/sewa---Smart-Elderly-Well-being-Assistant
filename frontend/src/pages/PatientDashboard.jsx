@@ -271,9 +271,7 @@ const PatientDashboard = () => {
             />
             {/* Header */}
             <header className="w-full p-4 md:p-6 bg-gray-800 border-b border-gray-700 flex justify-between items-center sticky top-0 z-10">
-                <h1 className="text-3xl font-bold bg-linear-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
-                    SEWA
-                </h1>
+                <img src="/sewa.svg" alt="SEWA" className="h-10 w-auto" />
 
                 <div className="flex items-center space-x-3">
                     <button

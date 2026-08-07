@@ -86,11 +86,11 @@ const GuardianDashboard = () => {
                 `}
             >
                 <div className="p-6 flex justify-between items-center">
-                    <div>
-                        <h1 className="text-3xl font-extrabold bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                            SEWA
-                        </h1>
-                        <p className="text-xs font-medium text-gray-500 tracking-wider uppercase mt-1">Guardian Portal</p>
+                    <div className="flex items-center gap-3">
+                        <img src="/sewa.svg" alt="SEWA" className="h-10 w-auto" />
+                        <div>
+                            <p className="text-xs font-medium text-gray-500 tracking-wider uppercase">Guardian Portal</p>
+                        </div>
                     </div>
                     <button onClick={toggleSidebar} className="md:hidden text-gray-400 hover:text-white">
                         <X className="w-6 h-6" />
@@ -121,6 +121,14 @@ const GuardianDashboard = () => {
                     >
                         <Calendar className="w-5 h-5" />
                         <span className="font-medium">Medicine Schedule</span>
+                    </button>
+                    <button
+                        onClick={() => { setActiveTab("notes"); setIsSidebarOpen(false); }}
+                        className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${activeTab === "notes" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/40" : "text-gray-400 hover:bg-gray-700 hover:text-white"
+                            }`}
+                    >
+                        <Users className="w-5 h-5" />
+                        <span className="font-medium">Hospital Notes</span>
                     </button>
                     <button
                         onClick={() => { setActiveTab("fall"); setIsSidebarOpen(false); }}
@@ -280,6 +288,36 @@ const GuardianDashboard = () => {
                                     <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
                                         <h3 className="text-xl font-bold text-white mb-4">Complete Schedule</h3>
                                         <MedicineScheduleList schedule={patient?.medicineSchedule} />
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === "notes" && (
+                                <div className="space-y-6">
+                                    <div className="bg-gray-800 p-6 rounded-3xl border border-gray-700">
+                                        <h3 className="text-2xl font-semibold text-white mb-4">Hospital Notes</h3>
+                                        {patient?.hospitalNotes?.length > 0 ? (
+                                            <div className="space-y-4">
+                                                {patient.hospitalNotes
+                                                    .slice()
+                                                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                                                    .map((note, index) => (
+                                                        <div key={index} className="rounded-3xl border border-gray-700 bg-gray-900 p-4">
+                                                            <div className="flex items-center justify-between gap-3 mb-3">
+                                                                <div>
+                                                                    <p className="text-sm text-gray-400">From: {note.hospitalName || "Hospital"}</p>
+                                                                    <p className="text-xs text-gray-500">{new Date(note.createdAt).toLocaleString()}</p>
+                                                                </div>
+                                                            </div>
+                                                            <p className="text-gray-100 whitespace-pre-line">{note.text}</p>
+                                                        </div>
+                                                    ))}
+                                            </div>
+                                        ) : (
+                                            <div className="rounded-3xl border border-dashed border-gray-700 bg-gray-900 p-6 text-gray-400">
+                                                No hospital notes available yet. Any linked hospital can add notes for this patient.
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}

@@ -9,6 +9,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import toast from "react-hot-toast";
 import LinkPatientHospital from "../components/LinkPatientHospital";
 
 const HospitalDashboard = () => {
@@ -18,6 +19,7 @@ const HospitalDashboard = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [noteTexts, setNoteTexts] = useState({});
 
   const fetchHospitalData = useCallback(async () => {
     setLoading(true);
@@ -56,6 +58,44 @@ const HospitalDashboard = () => {
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
+  const handleNoteChange = (patientId, value) => {
+    setNoteTexts((prev) => ({
+      ...prev,
+      [patientId]: value,
+    }));
+  };
+
+  const handleAddNote = async (patientId) => {
+    const noteText = noteTexts[patientId]?.trim();
+    if (!noteText) {
+      toast.error("Please enter a note before submitting.");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:8000/api/hospital/patient-note", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ patientId, noteText }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast.success("Note sent to guardian.");
+        setNoteTexts((prev) => ({ ...prev, [patientId]: "" }));
+        fetchHospitalData();
+      } else {
+        toast.error(data.message || "Unable to send note.");
+      }
+    } catch (error) {
+      console.error("Error adding note", error);
+      toast.error("Unable to send note. Please try again.");
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gray-900 text-white font-sans overflow-hidden">
       {isSidebarOpen && (
@@ -74,11 +114,11 @@ const HospitalDashboard = () => {
         `}
       >
         <div className="p-6 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-extrabold bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-              SEWA
-            </h1>
-            <p className="text-xs font-medium text-gray-500 tracking-wider uppercase mt-1">Hospital Portal</p>
+          <div className="flex items-center gap-3">
+            <img src="/sewa.svg" alt="SEWA" className="h-10 w-auto" />
+            <div>
+              <p className="text-xs font-medium text-gray-500 tracking-wider uppercase">Hospital Portal</p>
+            </div>
           </div>
           <button onClick={toggleSidebar} className="md:hidden text-gray-400 hover:text-white">
             <X className="w-6 h-6" />
@@ -202,6 +242,22 @@ const HospitalDashboard = () => {
                               <p className="text-gray-400 mt-1">{patient.phone}</p>
                             </div>
                             <span className="rounded-full bg-emerald-500/10 text-emerald-200 px-3 py-1 text-sm font-semibold">Linked</span>
+                          </div>
+                          <div className="mt-6 space-y-3">
+                            <label className="block text-sm font-medium text-gray-300">Send note to guardian</label>
+                            <textarea
+                              rows={4}
+                              value={noteTexts[patient._id] || ""}
+                              onChange={(e) => handleNoteChange(patient._id, e.target.value)}
+                              className="w-full resize-none rounded-2xl border border-gray-700 bg-gray-900 p-3 text-sm text-gray-100 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                              placeholder="Add information for the guardian..."
+                            />
+                            <button
+                              onClick={() => handleAddNote(patient._id)}
+                              className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+                            >
+                              Send Note
+                            </button>
                           </div>
                         </div>
                       ))}
